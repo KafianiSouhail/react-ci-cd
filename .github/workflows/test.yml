@@ -1,7 +1,7 @@
-name: Test My App
+name: Deploy
 on: push
 jobs:
-    test-app:
+    test:
         runs-on: ubuntu-latest
         steps:
             - name: Get code
@@ -14,3 +14,19 @@ jobs:
               run: npm ci
             - name: RUn tests
               run: npm test
+    deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        - name: Install nodejs
+          uses: actions/setup-node@v6
+          with:
+            node-version: 24
+        - name: Install dependencies
+          run: npm ci
+        - name: Build
+          run: npm run build
+        - name: Deploy 
+          run: echo "Deploying ..."    
+
